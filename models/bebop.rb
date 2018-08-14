@@ -74,11 +74,10 @@ def Bounty.find_by_name(name)
   result = db.exec_prepared("find_by_name", values)
   db.close()
   # return result
-  check = result.map { |b| Bounty.new(b)}
-  if check == []
+  if result.num_tuples.zero?
     return nil
   else
-    return check
+    return Bounty.new(result[0])
   end
 end
 
